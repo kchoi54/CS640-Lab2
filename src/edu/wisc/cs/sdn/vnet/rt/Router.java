@@ -127,6 +127,7 @@ public class Router extends Device
 		header = (IPv4) header.deserialize(serialized, 0, serialized.length);
 		etherPacket = (Ethernet) etherPacket.setPayload(header);
 
+
 		//drop if packet is destined to one of router's interfaces
 		for (Iface iface : this.interfaces.values())
 		{

@@ -54,13 +54,13 @@ public class Switch extends Device implements Runnable
 	public void run(){
 		try {
 
-			while(){
+			while(true){
 				if(switchMap!=null){
 					for(Map.Entry<String, SwitchElement> entry : switchMap.entrySet()){
 						long timeremaining = System.currentTimeMillis() - entry.getValue().getLastUpdate();
 						if(timeremaining >= 15000L){
 							switchMap.remove(entry.getKey());
-							System.out.println("Entry Timeout - "+ entry.getValue(()));
+							System.out.println("Entry Timeout - "+ entry.getValue());
 						}
 
 
@@ -122,13 +122,13 @@ public class Switch extends Device implements Runnable
 		//Entry found -> forward to correct interface
 		else{
 			System.out.println("Sending packet...");
-			sendPacket(etherPacket,entry.getOutInterface());
+			sendPacket(etherPacket,entry.getoutInterface());
 
 		}
 
 		//Check if switchmap contains information about the current source - if not - populate 
 
-		if(switchMap.containKey(sourceMAC)){
+		if(switchMap.containsKey(sourceMAC)){
 			System.out.println("Updating the forwarding table...");
 			SwitchElement se  = switchMap.get(sourceMAC);
 			se.setLastUpdate(System.currentTimeMillis());
@@ -138,8 +138,6 @@ public class Switch extends Device implements Runnable
 			System.out.println("Adding entry to the forwarding table...");
 			switchMap.put(sourceMAC, new SwitchElement(System.currentTimeMillis(), inIface));
 		}
-
-
 
 	}
 }
